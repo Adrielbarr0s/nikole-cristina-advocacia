@@ -1,0 +1,292 @@
+<mat-toolbar class="nav">
+  <div class="nav__inner container">
+    <a (click)="scrollTo('inicio', $event)" class="brand">
+      <img class="brand__logo-img" src="assets/logo-preta.jpeg" alt="Logo" />
+      <span class="brand__text">Nikole Cristina | Advocacia</span>
+    </a>
+
+    <nav class="nav__links">
+      <a (click)="scrollTo('inicio', $event)">Início</a>
+      <a (click)="scrollTo('areas', $event)">Áreas de Atuação</a>
+      <a (click)="scrollTo('sobre', $event)">Sobre</a>
+      <a (click)="scrollTo('contato', $event)" class="btn-nav">Fale Conosco</a>
+    </nav>
+
+    <button mat-icon-button class="hamburger" (click)="mobileOpen = !mobileOpen">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<nav class="mobile-menu" [hidden]="!mobileOpen">
+  <a (click)="scrollTo('inicio', $event)">Início</a>
+  <a (click)="scrollTo('areas', $event)">Áreas de Atuação</a>
+  <a (click)="scrollTo('sobre', $event)">Sobre</a>
+  <a (click)="scrollTo('contato', $event)">Contato</a>
+</nav>
+
+<header id="inicio" class="hero">
+  <div class="hero__grid container">
+    <div class="hero__content reveal">
+      <h1>
+        <span>Nikole Cristina</span>
+        <strong>Advocacia</strong>
+      </h1>
+      <p class="hero__subtitle">
+        Defendendo seus direitos com dedicação e excelência jurídica.
+      </p>
+      <a class="btn-cta" [href]="getWhatsAppLink()" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i> SAIBA MAIS
+        <i class="fa-solid fa-arrow-right arrow-icon"></i>
+      </a>
+    </div>
+
+    <div class="hero__visual reveal delay-2">
+      <img src="assets/nikole-cristina.png" alt="Dra. Nikole Cristina" />
+    </div>
+  </div>
+</header>
+
+<section id="areas" class="section section--areas">
+  <div class="container">
+    <h2 class="section-title reveal">Áreas de Atuação</h2>
+
+    <div class="areas__grid">
+      <div class="area-card reveal delay-1">
+        <div class="area-icon-wrapper">
+          <i class="fa-solid fa-scale-balanced"></i>
+        </div>
+        <h4>Direito Civil</h4>
+        <p>Contratos, responsabilidade civil, danos materiais e morais com foco na prevenção de litígios.</p>
+        <span class="area-link">Saiba mais <i class="fa-solid fa-chevron-right"></i></span>
+      </div>
+
+      <div class="area-card reveal delay-2">
+        <div class="area-icon-wrapper">
+          <i class="fa-solid fa-users-rays"></i>
+        </div>
+        <h4>Direito de Família</h4>
+        <p>Divórcio, guarda, pensão alimentícia e planejamento familiar com abordagem humanizada.</p>
+        <span class="area-link">Saiba mais <i class="fa-solid fa-chevron-right"></i></span>
+      </div>
+
+      <div class="area-card reveal delay-3">
+        <div class="area-icon-wrapper">
+          <i class="fa-solid fa-briefcase"></i>
+        </div>
+        <h4>Direito do Trabalho</h4>
+        <p>Reclamatórias, acordos e negociações trabalhistas garantindo a justiça nas relações de emprego.</p>
+        <span class="area-link">Saiba mais <i class="fa-solid fa-chevron-right"></i></span>
+      </div>
+
+      <div class="area-card reveal delay-4">
+        <div class="area-icon-wrapper">
+          <i class="fa-solid fa-person-cane"></i>
+        </div>
+        <h4>Previdenciário</h4>
+        <p>Aposentadorias, pensões e revisões do INSS com análise estratégica de tempo e contribuição.</p>
+        <span class="area-link">Saiba mais <i class="fa-solid fa-chevron-right"></i></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre" class="section section--sobre">
+  <div class="container">
+    <div class="sobre-card reveal">
+
+      <div class="sobre-texto">
+        <h3 class="sobre-subtitle">Sobre a Fundadora</h3>
+        <h2 class="sobre-title">Dra. Nikole Cristina</h2>
+
+        <p class="sobre-description">
+          Com uma trajetória pautada pela <strong>excelência e pelo atendimento humanizado</strong>, dedico minha
+          carreira a transformar a vida de trabalhadores e segurados do INSS.
+          <br><br>
+          Minha missão é oferecer uma advocacia estratégica e transparente, onde cada cliente é tratado com a
+          individualidade e o respeito que sua história merece.
+        </p>
+
+        <div class="sobre-highlights">
+          <div class="highlight-item">
+            <div class="icon-box"><i class="fa-solid fa-heart-pulse"></i></div>
+            <div>
+              <h4>Foco no Cliente</h4>
+              <p>Atendimento humanizado e personalizado para cada caso.</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+            <div>
+              <h4>Ética e Segurança</h4>
+              <p>Transparência total em todas as etapas do processo.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sobre-cta">
+          <a class="btn-cta" [href]="getWhatsAppLink()" target="_blank">
+            <i class="fa-brands fa-whatsapp"></i> AGENDAR CONSULTA
+          </a>
+        </div>
+      </div>
+
+      <div class="sobre-visual">
+        <div class="layered-frame">
+          <div class="bg-shape"></div>
+          <img src="assets/nikole-sobre.png" alt="Dra. Nikole Cristina" class="portrait-img" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="contato" class="section section--contato">
+  <div class="container">
+    <div class="contato-wrapper">
+
+      <div class="contato-info reveal">
+        <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Fale Conosco</h2>
+        <p class="contato-description">
+          Estamos prontos para defender seus direitos. Descreva brevemente sua situação para um pré-atendimento
+          especializado.
+        </p>
+
+        <div class="info-list">
+          <div class="info-item">
+            <mat-icon>location_on</mat-icon>
+            <div>
+              <h4>Atendimento Presencial</h4>
+              <p>Brasília - DF</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <mat-icon>public</mat-icon>
+            <div>
+              <h4>Atendimento Digital</h4>
+              <p>Todo o Brasil (Home Office)</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <mat-icon>schedule</mat-icon>
+            <div>
+              <h4>Horário de Funcionamento</h4>
+              <p>Segunda a Sexta<br>08:00 às 12:00 e 13:00 às 18:00<br><em>(Horário de Brasília)</em></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contato-card reveal delay-1">
+        <form class="contato-form" #contatoForm="ngForm" (ngSubmit)="enviarMensagem(contatoForm)">
+          <div class="form-group">
+            <label>Seu Nome Completo</label>
+            <input type="text" name="nome" ngModel required placeholder="Ex: João Silva">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>E-mail</label>
+              <input type="email" name="email" ngModel required placeholder="seu@email.com">
+            </div>
+            <div class="form-group">
+              <label>WhatsApp / Telefone</label>
+              <input type="text" name="telefone" ngModel required placeholder="(00) 00000-0000" maxlength="15"
+                (input)="formatarTelefone($event)">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Descreva seu problema jurídico</label>
+            <textarea name="mensagem" ngModel required rows="4" placeholder="Como podemos te ajudar?"></textarea>
+          </div>
+
+          <button type="submit" class="btn-cta btn-submit">
+            <i class="fa-brands fa-whatsapp"></i> ENVIAR SOLICITAÇÃO
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="brand">
+      <img class="brand__logo-img" src="assets/logo-preta.jpeg" alt="Logo" />
+      <span class="brand__text">Nikole Cristina | Advocacia</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://instagram.com/advnikolecristina" target="_blank"><i class="fa-brands fa-instagram"></i>
+        INSTAGRAM</a>
+      <a href="https://www.linkedin.com/in/nikole-cristina-da-silva-rocha-a8564b2a0/" target="_blank"><i
+          class="fa-brands fa-linkedin"></i> LINKEDIN</a>
+      <a href="mailto:advnikolecristina@gmail.com"><i class="fa-solid fa-envelope"></i> E-MAIL</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="footer__legal">
+      <div class="legal-texts">
+        <p>&copy; 2026 Nikole Cristina | Advocacia. Todos os direitos reservados. | OAB/DF XXXXX</p>
+      </div>
+      <div class="legal-links">
+        <a href="#" (click)="abrirTermos($event)">Política de Privacidade e Termos de Uso</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="cookie-banner" *ngIf="showCookieBanner">
+  <div class="cookie-content">
+    <div class="cookie-text">
+      <mat-icon>lock</mat-icon>
+      <div>
+        <h4>Sua privacidade</h4>
+        <p>Ao acessar nosso site, você concorda com nossa <a href="#" (click)="abrirTermos($event)">Política de
+            Privacidade e Termos de Uso</a>.</p>
+      </div>
+    </div>
+    <button class="btn-cookie" (click)="aceitarCookies()">Continuar e fechar</button>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showTermosModal" (click)="fecharTermos()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+
+    <button class="btn-close-modal" (click)="fecharTermos()">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="modal-body">
+      <h2>Política de Privacidade e Termos de Uso</h2>
+      <p class="data-update">Última atualização: Março de 2026</p>
+
+      <h3>1. Finalidade Informativa</h3>
+      <p>Todo o conteúdo deste site tem caráter exclusivamente informativo e não substitui uma consulta formal. O
+        preenchimento do formulário não estabelece automaticamente uma relação de cliente e advogado.</p>
+
+      <h3>2. Coleta e Uso de Dados Pessoais (LGPD)</h3>
+      <p>Em conformidade com a Lei nº 13.709/2018, informamos que coletamos apenas os dados preenchidos voluntariamente
+        no formulário (Nome, E-mail, Telefone e Relato do Caso). Esses dados têm a finalidade <strong>exclusiva</strong>
+        de permitir que nossa equipe retorne o seu contato para atendimento jurídico.</p>
+      <p>Nós não vendemos, alugamos ou compartilhamos suas informações com terceiros.</p>
+
+      <h3>3. Cookies</h3>
+      <p>Utilizamos cookies técnicos essenciais apenas para garantir o funcionamento adequado da plataforma. Não
+        utilizamos cookies para rastreamento invasivo ou publicidade de terceiros.</p>
+
+      <h3>4. Seus Direitos</h3>
+      <p>Você tem o direito de solicitar a exclusão ou bloqueio dos seus dados pessoais armazenados em nossa base. Para
+        isso, basta entrar em contato através do e-mail de contato oficial do escritório.</p>
+
+      <h3>5. Direitos Autorais</h3>
+      <p>Todo o layout, textos, imagens e identidade visual deste site são protegidos por direitos autorais pertencentes
+        à Nikole Cristina Advocacia. É proibida a reprodução sem autorização prévia.</p>
+    </div>
+  </div>
+</div>
