@@ -20,8 +20,69 @@ export class AppComponent implements OnInit, AfterViewInit {
   // Variável que controla o banner de cookies
   showCookieBanner: boolean = true;
 
-  // ====== NOVA VARIÁVEL: Controla o Pop-up de Termos ======
+  // ====== Variável: Controla o Pop-up de Termos ======
   showTermosModal: boolean = false;
+
+  // ====== NOVAS VARIÁVEIS: Controlam o Modal de Áreas de Atuação ======
+  showAreaModal: boolean = false;
+  areaSelecionada: any = null;
+
+  // Textos completos de cada área (Você pode editar os textos à vontade aqui)
+  detalhesAreas: any = {
+    civil: {
+      titulo: 'Direito Civil',
+      texto: `
+        <p>O Direito Civil é a base das relações em sociedade. Nossa atuação nesta área visa proteger seu patrimônio, sua imagem e seus contratos.</p>
+        <p><strong>Principais serviços:</strong></p>
+        <ul>
+          <li>Elaboração e revisão de contratos.</li>
+          <li>Ações de indenização por danos morais e materiais.</li>
+          <li>Cobranças judiciais e extrajudiciais.</li>
+          <li>Resolução de conflitos de vizinhança e propriedade.</li>
+        </ul>
+        <p>Buscamos sempre a resolução mais rápida e vantajosa, priorizando acordos quando favoráveis ao cliente.</p>
+      `
+    },
+    familia: {
+      titulo: 'Direito de Família',
+      texto: `
+        <p>Sabemos que questões familiares exigem não apenas conhecimento técnico, mas também <strong>sensibilidade e discrição</strong>.</p>
+        <p><strong>Nossa atuação inclui:</strong></p>
+        <ul>
+          <li>Divórcio judicial e extrajudicial.</li>
+          <li>Pensão alimentícia (fixação, revisão e exoneração).</li>
+          <li>Guarda de menores e regulamentação de visitas.</li>
+          <li>Inventários e testamentos.</li>
+        </ul>
+      `
+    },
+    trabalho: {
+      titulo: 'Direito do Trabalho',
+      texto: `
+        <p>Atuamos na defesa intransigente dos direitos nas relações de emprego, garantindo que a justiça seja feita.</p>
+        <p><strong>Foco de atuação:</strong></p>
+        <ul>
+          <li>Reconhecimento de vínculo empregatício.</li>
+          <li>Cobrança de horas extras e verbas rescisórias não pagas.</li>
+          <li>Ações envolvendo assédio moral e doenças ocupacionais.</li>
+          <li>Reversão de demissão por justa causa.</li>
+        </ul>
+      `
+    },
+    previdenciario: {
+      titulo: 'Direito Previdenciário',
+      texto: `
+        <p>Garantir o seu futuro e os seus benefícios é a nossa prioridade. Lidamos com a burocracia do INSS para você não precisar se preocupar.</p>
+        <p><strong>Serviços especializados:</strong></p>
+        <ul>
+          <li>Planejamento Previdenciário (saiba quando e com quanto vai se aposentar).</li>
+          <li>Aposentadorias (idade, tempo de contribuição, especial).</li>
+          <li>Auxílio-doença e aposentadoria por invalidez.</li>
+          <li>Benefício de Prestação Continuada (BPC/LOAS).</li>
+        </ul>
+      `
+    }
+  };
 
   constructor(private el: ElementRef) { }
 
@@ -39,7 +100,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     localStorage.setItem('cookiesAccepted', 'true');
   }
 
-  // ====== NOVAS FUNÇÕES: Abrir e Fechar os Termos ======
+  // ====== Funções: Abrir e Fechar os Termos ======
   abrirTermos(event: Event) {
     event.preventDefault(); // Impede que o link jogue a tela para o topo
     this.showTermosModal = true;
@@ -49,6 +110,19 @@ export class AppComponent implements OnInit, AfterViewInit {
   fecharTermos() {
     this.showTermosModal = false;
     document.body.style.overflow = 'auto'; // Libera a rolagem do site novamente
+  }
+
+  // ====== NOVAS FUNÇÕES: Abrir e Fechar o Modal de Áreas ======
+  abrirModalArea(areaKey: string) {
+    this.areaSelecionada = this.detalhesAreas[areaKey]; // Pega o texto correspondente
+    this.showAreaModal = true; // Mostra o modal
+    document.body.style.overflow = 'hidden'; // Trava o scroll do fundo
+  }
+
+  fecharModalArea() {
+    this.showAreaModal = false; // Esconde o modal
+    setTimeout(() => this.areaSelecionada = null, 300); // Limpa após a animação
+    document.body.style.overflow = 'auto'; // Destrava o scroll
   }
 
   // 1. Navbar Inteligente: Detecta o scroll para mudar o visual da barra
@@ -126,7 +200,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // Adicione esta função dentro da classe AppComponent
+  // Máscara de Telefone
   formatarTelefone(event: any) {
     let valor = event.target.value.replace(/\D/g, ''); // Remove tudo que não é número
 

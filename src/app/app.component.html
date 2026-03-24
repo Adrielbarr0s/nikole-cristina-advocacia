@@ -58,7 +58,8 @@
         </div>
         <h4>Direito Civil</h4>
         <p>Contratos, responsabilidade civil, danos materiais e morais com foco na prevenção de litígios.</p>
-        <span class="area-link">Saiba mais <i class="fa-solid fa-chevron-right"></i></span>
+        <span class="area-link" style="cursor: pointer;" (click)="abrirModalArea('civil')">Saiba mais <i
+            class="fa-solid fa-chevron-right"></i></span>
       </div>
 
       <div class="area-card reveal delay-2">
@@ -67,7 +68,8 @@
         </div>
         <h4>Direito de Família</h4>
         <p>Divórcio, guarda, pensão alimentícia e planejamento familiar com abordagem humanizada.</p>
-        <span class="area-link">Saiba mais <i class="fa-solid fa-chevron-right"></i></span>
+        <span class="area-link" style="cursor: pointer;" (click)="abrirModalArea('familia')">Saiba mais <i
+            class="fa-solid fa-chevron-right"></i></span>
       </div>
 
       <div class="area-card reveal delay-3">
@@ -76,7 +78,8 @@
         </div>
         <h4>Direito do Trabalho</h4>
         <p>Reclamatórias, acordos e negociações trabalhistas garantindo a justiça nas relações de emprego.</p>
-        <span class="area-link">Saiba mais <i class="fa-solid fa-chevron-right"></i></span>
+        <span class="area-link" style="cursor: pointer;" (click)="abrirModalArea('trabalho')">Saiba mais <i
+            class="fa-solid fa-chevron-right"></i></span>
       </div>
 
       <div class="area-card reveal delay-4">
@@ -85,7 +88,8 @@
         </div>
         <h4>Previdenciário</h4>
         <p>Aposentadorias, pensões e revisões do INSS com análise estratégica de tempo e contribuição.</p>
-        <span class="area-link">Saiba mais <i class="fa-solid fa-chevron-right"></i></span>
+        <span class="area-link" style="cursor: pointer;" (click)="abrirModalArea('previdenciario')">Saiba mais <i
+            class="fa-solid fa-chevron-right"></i></span>
       </div>
     </div>
   </div>
@@ -232,7 +236,7 @@
   <div class="container">
     <div class="footer__legal">
       <div class="legal-texts">
-        <p>&copy; 2026 Nikole Cristina | Advocacia. Todos os direitos reservados. | OAB/DF XXXXX</p>
+        <p>&copy; 2026 Nikole Cristina | Advocacia. Todos os direitos reservados. | OAB/DF 86.467</p>
       </div>
       <div class="legal-links">
         <a href="#" (click)="abrirTermos($event)">Política de Privacidade e Termos de Uso</a>
@@ -288,5 +292,30 @@
       <p>Todo o layout, textos, imagens e identidade visual deste site são protegidos por direitos autorais pertencentes
         à Nikole Cristina Advocacia. É proibida a reprodução sem autorização prévia.</p>
     </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showAreaModal" (click)="fecharModalArea()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+
+    <button class="btn-close-modal" (click)="fecharModalArea()">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="modal-body" *ngIf="areaSelecionada">
+      <h2 style="margin-bottom: 5px;">{{ areaSelecionada.titulo }}</h2>
+      <p class="data-update" style="margin-bottom: 20px;">Área de atuação especializada</p>
+
+      <div [innerHTML]="areaSelecionada.texto"
+        style="text-align: left; line-height: 1.6; color: #4a4a4a; font-size: 15px;"></div>
+
+      <div style="text-align: center; margin-top: 30px;">
+        <button class="btn-cookie" style="width: auto; padding: 12px 30px; font-weight: bold;"
+          (click)="fecharModalArea()">
+          Voltar
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>

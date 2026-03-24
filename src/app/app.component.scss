@@ -4,19 +4,20 @@
 $cor-primaria: #2d2926;
 $cor-destaque: #8e7373;
 $cor-fundo-site: #f8f7f6;
-$cor-texto: #555555;
+$cor-texto: #444444;
+/* CORREÇÃO: Escurecido para melhorar contraste */
 $cor-borda: #e8e4e1;
 
 $fonte-titulo: 'Cormorant Garamond', serif;
 $fonte-texto: 'Montserrat', sans-serif;
 
-/* ====== GLOBAIS (CORREÇÃO: SEM FONT-FAMILY NO *) ====== */
+/* ====== GLOBAIS ====== */
 * {
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
 
-/* Aplicamos a fonte apenas em elementos de texto para não quebrar ícones */
+/* Aplicamos a fonte e peso ideal apenas em elementos de texto para não quebrar ícones */
 body,
 p,
 a,
@@ -26,6 +27,9 @@ li,
 input,
 textarea {
   font-family: $fonte-texto;
+  font-weight: 400;
+  /* CORREÇÃO: Garantindo leitura visível */
+  color: $cor-texto;
 }
 
 h1,
@@ -128,6 +132,8 @@ h6 {
       letter-spacing: 1.5px;
       transition: all 0.3s ease;
       cursor: pointer;
+      font-weight: 500;
+      /* CORREÇÃO: Links da navbar mais visíveis */
 
       &:hover {
         color: $cor-destaque;
@@ -167,11 +173,10 @@ h6 {
   }
 }
 
-/* ====== MENU MOBILE (ADICIONADO AQUI) ====== */
+/* ====== MENU MOBILE ====== */
 .mobile-menu {
   position: fixed;
   top: 80px;
-  /* Logo abaixo da navbar */
   left: 0;
   width: 100%;
   background: white;
@@ -209,7 +214,7 @@ h6 {
   }
 }
 
-/* ====== HERO (FOTO NO CHÃO + GRADIENTE) ====== */
+/* ====== HERO ====== */
 .hero {
   padding: 100px 0 0 0;
   position: relative;
@@ -270,7 +275,8 @@ h6 {
   color: $cor-texto;
   line-height: 1.8;
   margin-bottom: 40px;
-  font-weight: 300;
+  font-weight: 400;
+  /* CORREÇÃO */
   max-width: 500px;
 
   @media (max-width: 992px) {
@@ -316,20 +322,20 @@ h6 {
   align-items: center;
   gap: 15px;
   transition: all 0.4s ease;
+  font-weight: 600;
 
   i {
     color: white !important;
     font-size: 16px;
   }
 
-  /* Força cor do ícone do whats */
   &:hover {
     background: color.adjust($cor-destaque, $lightness: -10%);
     transform: translateY(-3px);
   }
 }
 
-/* ====== SEÇÃO QUEM SOU EU (PREMIUM) ====== */
+/* ====== SEÇÃO QUEM SOU EU ====== */
 .section--sobre {
   background-color: $cor-fundo-site;
   border-top: 1px solid $cor-borda;
@@ -366,9 +372,11 @@ h6 {
 .sobre-description {
   font-size: 16px;
   line-height: 1.8;
-  color: $cor-texto;
+  color: #333333;
+  /* CORREÇÃO: Mais escuro especificamente aqui */
   margin-bottom: 40px;
-  font-weight: 300;
+  font-weight: 400;
+  /* CORREÇÃO */
 
   strong {
     color: $cor-primaria;
@@ -376,7 +384,6 @@ h6 {
   }
 }
 
-/* DESTAQUES INTERNOS */
 .sobre-highlights {
   display: flex;
   flex-direction: column;
@@ -415,12 +422,12 @@ h6 {
       font-size: 14px;
       color: $cor-texto;
       margin: 0;
-      font-weight: 300;
+      font-weight: 400;
+      /* CORREÇÃO */
     }
   }
 }
 
-/* ====== NOVA MOLDURA "LAYERED BOUTIQUE" ====== */
 .sobre-visual {
   display: flex;
   justify-content: center;
@@ -558,7 +565,8 @@ h6 {
     line-height: 1.8;
     color: $cor-texto;
     margin-bottom: 25px;
-    font-weight: 300;
+    font-weight: 400;
+    /* CORREÇÃO */
   }
 
   .area-link {
@@ -592,7 +600,7 @@ h6 {
   }
 }
 
-/* ====== SEÇÃO CONTATO (LAYOUT DE 2 COLUNAS) ====== */
+/* ====== SEÇÃO CONTATO ====== */
 .section--contato {
   background-color: #ffffff;
 }
@@ -615,7 +623,8 @@ h6 {
     line-height: 1.8;
     color: $cor-texto;
     margin-bottom: 40px;
-    font-weight: 300;
+    font-weight: 400;
+    /* CORREÇÃO */
   }
 
   .info-list {
@@ -649,7 +658,8 @@ h6 {
       color: $cor-texto;
       margin: 0;
       line-height: 1.6;
-      font-weight: 300;
+      font-weight: 400;
+      /* CORREÇÃO */
 
       em {
         font-size: 12px;
@@ -707,6 +717,7 @@ h6 {
       background-color: #fcfafb;
       border-radius: 4px;
       font-family: $fonte-texto;
+      font-weight: 400;
       font-size: 14px;
       color: $cor-primaria;
       transition: all 0.3s ease;
@@ -792,7 +803,7 @@ h6 {
     }
   }
 
-  /* ====== FOOTER LEGAL (LGPD & OAB) ====== */
+  /* ====== FOOTER LEGAL ====== */
   .footer__legal {
     margin-top: 50px;
     padding-top: 30px;
@@ -812,7 +823,8 @@ h6 {
         color: rgba(255, 255, 255, 0.5);
         font-size: 11px;
         margin: 0 0 5px 0;
-        font-weight: 300;
+        font-weight: 400;
+        /* CORREÇÃO */
       }
 
       .disclaimer {
@@ -915,6 +927,8 @@ h6 {
       font-size: 13px;
       color: $cor-texto;
       line-height: 1.5;
+      font-weight: 400;
+      /* CORREÇÃO */
 
       a {
         color: $cor-destaque;
@@ -948,7 +962,7 @@ h6 {
   }
 }
 
-/* ====== POP-UP (MODAL) DE TERMOS E PRIVACIDADE ====== */
+/* ====== POP-UP (MODAIS) ====== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -970,7 +984,6 @@ h6 {
   width: 100%;
   max-width: 700px;
   max-height: 85vh;
-  /* Se o texto for longo, ele rola por dentro, sem quebrar a tela */
   border-radius: 8px;
   position: relative;
   display: flex;
@@ -1020,6 +1033,7 @@ h6 {
       margin-bottom: 30px;
       border-bottom: 1px solid $cor-borda;
       padding-bottom: 20px;
+      font-weight: 500;
     }
 
     h3 {
@@ -1033,7 +1047,8 @@ h6 {
       font-size: 14px;
       color: $cor-texto;
       line-height: 1.7;
-      font-weight: 300;
+      font-weight: 400;
+      /* CORREÇÃO */
       margin-bottom: 15px;
     }
 
@@ -1048,7 +1063,7 @@ h6 {
   }
 }
 
-/* Animações Globais dos Modais e Banners */
+/* Animações Globais */
 @keyframes slideUp {
   from {
     opacity: 0;
