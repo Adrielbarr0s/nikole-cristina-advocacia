@@ -775,6 +775,8 @@ h6 {
     &__text {
       font-family: $fonte-titulo;
       font-size: 1.4rem;
+      color: #ffffff;
+      /* CORREÇÃO: Força o nome para branco no rodapé */
     }
   }
 
