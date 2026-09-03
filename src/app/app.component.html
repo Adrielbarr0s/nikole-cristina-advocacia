@@ -1,235 +1,254 @@
-<mat-toolbar class="nav">
+<mat-toolbar class="nav" role="banner">
   <div class="nav__inner container">
-    <a (click)="scrollTo('inicio', $event)" class="brand">
-      <img class="brand__logo-img" src="assets/logo-preta.jpeg" alt="Logo" />
+    <a (click)="scrollTo('inicio', $event)" (keydown.enter)="scrollTo('inicio', $event)" tabindex="0" class="brand" role="button" aria-label="Ir para o início">
+      <img class="brand__logo-img" src="assets/logo-preta.jpeg" alt="Logotipo Nikole Cristina Advocacia" />
       <span class="brand__text">Nikole Cristina | Advocacia</span>
     </a>
 
-    <nav class="nav__links">
-      <a (click)="scrollTo('inicio', $event)">Início</a>
-      <a (click)="scrollTo('areas', $event)">Áreas de Atuação</a>
-      <a (click)="scrollTo('sobre', $event)">Sobre</a>
-      <a (click)="scrollTo('contato', $event)" class="btn-nav">Fale Conosco</a>
+    <nav class="nav__links" aria-label="Navegação principal">
+      <a (click)="scrollTo('inicio', $event)" (keydown.enter)="scrollTo('inicio', $event)" tabindex="0" role="button">Início</a>
+      <a (click)="scrollTo('areas', $event)" (keydown.enter)="scrollTo('areas', $event)" tabindex="0" role="button">Áreas de Atuação</a>
+      <a (click)="scrollTo('sobre', $event)" (keydown.enter)="scrollTo('sobre', $event)" tabindex="0" role="button">Sobre</a>
+      <a (click)="scrollTo('contato', $event)" (keydown.enter)="scrollTo('contato', $event)" tabindex="0" role="button" class="btn-nav">Fale Conosco</a>
     </nav>
 
-    <button mat-icon-button class="hamburger" (click)="mobileOpen = !mobileOpen">
-      <mat-icon>menu</mat-icon>
+    <button mat-icon-button class="hamburger" (click)="mobileOpen = !mobileOpen" aria-label="Abrir menu mobile">
+      <mat-icon>{{ mobileOpen ? 'close' : 'menu' }}</mat-icon>
     </button>
   </div>
 </mat-toolbar>
 
-<nav class="mobile-menu" [hidden]="!mobileOpen">
-  <a (click)="scrollTo('inicio', $event)">Início</a>
-  <a (click)="scrollTo('areas', $event)">Áreas de Atuação</a>
-  <a (click)="scrollTo('sobre', $event)">Sobre</a>
-  <a (click)="scrollTo('contato', $event)">Contato</a>
+<nav class="mobile-menu" [hidden]="!mobileOpen" aria-label="Menu de navegação mobile">
+  <a (click)="scrollTo('inicio', $event)" (keydown.enter)="scrollTo('inicio', $event)" tabindex="0" role="button">Início</a>
+  <a (click)="scrollTo('areas', $event)" (keydown.enter)="scrollTo('areas', $event)" tabindex="0" role="button">Áreas de Atuação</a>
+  <a (click)="scrollTo('sobre', $event)" (keydown.enter)="scrollTo('sobre', $event)" tabindex="0" role="button">Sobre</a>
+  <a (click)="scrollTo('contato', $event)" (keydown.enter)="scrollTo('contato', $event)" tabindex="0" role="button">Contato</a>
 </nav>
 
-<header id="inicio" class="hero">
-  <div class="hero__grid container">
-    <div class="hero__content reveal">
-      <h1>
-        <span>Nikole Cristina</span>
-        <strong>Advocacia</strong>
-      </h1>
-      <p class="hero__subtitle">
-        Defendendo seus direitos com dedicação e excelência jurídica.
-      </p>
-      <a class="btn-cta" [href]="getWhatsAppLink()" target="_blank">
-        <i class="fa-brands fa-whatsapp"></i> SAIBA MAIS
-        <i class="fa-solid fa-arrow-right arrow-icon"></i>
-      </a>
-    </div>
-
-    <div class="hero__visual reveal delay-2">
-      <img src="assets/nikole-cristina.png" alt="Dra. Nikole Cristina" />
-    </div>
-  </div>
-</header>
-
-<section id="areas" class="section section--areas">
-  <div class="container">
-    <h2 class="section-title reveal">Áreas de Atuação</h2>
-
-    <div class="areas__grid">
-      <div class="area-card reveal delay-1">
-        <div class="area-icon-wrapper">
-          <i class="fa-solid fa-scale-balanced"></i>
-        </div>
-        <h4>Direito Civil</h4>
-        <p>Contratos, responsabilidade civil, danos materiais e morais com foco na prevenção de litígios.</p>
-        <span class="area-link" style="cursor: pointer;" (click)="abrirModalArea('civil')">Saiba mais <i
-            class="fa-solid fa-chevron-right"></i></span>
-      </div>
-
-      <div class="area-card reveal delay-2">
-        <div class="area-icon-wrapper">
-          <i class="fa-solid fa-users-rays"></i>
-        </div>
-        <h4>Direito de Família</h4>
-        <p>Divórcio, guarda, pensão alimentícia e planejamento familiar com abordagem humanizada.</p>
-        <span class="area-link" style="cursor: pointer;" (click)="abrirModalArea('familia')">Saiba mais <i
-            class="fa-solid fa-chevron-right"></i></span>
-      </div>
-
-      <div class="area-card reveal delay-3">
-        <div class="area-icon-wrapper">
-          <i class="fa-solid fa-briefcase"></i>
-        </div>
-        <h4>Direito do Trabalho</h4>
-        <p>Reclamatórias, acordos e negociações trabalhistas garantindo a justiça nas relações de emprego.</p>
-        <span class="area-link" style="cursor: pointer;" (click)="abrirModalArea('trabalho')">Saiba mais <i
-            class="fa-solid fa-chevron-right"></i></span>
-      </div>
-
-      <div class="area-card reveal delay-4">
-        <div class="area-icon-wrapper">
-          <i class="fa-solid fa-person-cane"></i>
-        </div>
-        <h4>Previdenciário</h4>
-        <p>Aposentadorias, pensões e revisões do INSS com análise estratégica de tempo e contribuição.</p>
-        <span class="area-link" style="cursor: pointer;" (click)="abrirModalArea('previdenciario')">Saiba mais <i
-            class="fa-solid fa-chevron-right"></i></span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="sobre" class="section section--sobre">
-  <div class="container">
-    <div class="sobre-card reveal">
-
-      <div class="sobre-texto">
-        <h3 class="sobre-subtitle">Sobre a Fundadora</h3>
-        <h2 class="sobre-title">Dra. Nikole Cristina</h2>
-
-        <p class="sobre-description">
-          Com uma trajetória pautada pela <strong>excelência e pelo atendimento humanizado</strong>, dedico minha
-          carreira a transformar a vida de trabalhadores e segurados do INSS.
-          <br><br>
-          Minha missão é oferecer uma advocacia estratégica e transparente, onde cada cliente é tratado com a
-          individualidade e o respeito que sua história merece.
+<main>
+  <header id="inicio" class="hero">
+    <div class="hero__grid container">
+      <div class="hero__content reveal">
+        <h1>
+          <span>Nikole Cristina</span>
+          <strong>Advocacia</strong>
+        </h1>
+        <p class="hero__subtitle">
+          Defendendo seus direitos com dedicação, ética e excelência jurídica.
         </p>
-
-        <div class="sobre-highlights">
-          <div class="highlight-item">
-            <div class="icon-box"><i class="fa-solid fa-heart-pulse"></i></div>
-            <div>
-              <h4>Foco no Cliente</h4>
-              <p>Atendimento humanizado e personalizado para cada caso.</p>
-            </div>
-          </div>
-          <div class="highlight-item">
-            <div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div>
-            <div>
-              <h4>Ética e Segurança</h4>
-              <p>Transparência total em todas as etapas do processo.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="sobre-cta">
-          <a class="btn-cta" [href]="getWhatsAppLink()" target="_blank">
-            <i class="fa-brands fa-whatsapp"></i> AGENDAR CONSULTA
-          </a>
-        </div>
+        <a class="btn-cta" [href]="getWhatsAppLink()" target="_blank" rel="noopener noreferrer" aria-label="Falar pelo WhatsApp com a Dra. Nikole Cristina">
+          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> SAIBA MAIS
+          <i class="fa-solid fa-arrow-right arrow-icon" aria-hidden="true"></i>
+        </a>
       </div>
 
-      <div class="sobre-visual">
-        <div class="layered-frame">
-          <div class="bg-shape"></div>
-          <img src="assets/nikole-sobre.png" alt="Dra. Nikole Cristina" class="portrait-img" />
-        </div>
+      <div class="hero__visual reveal delay-2">
+        <img src="assets/nikole-cristina.png" alt="Dra. Nikole Cristina - Advogada Especialista" />
       </div>
-
     </div>
-  </div>
-</section>
+  </header>
 
-<section id="contato" class="section section--contato">
-  <div class="container">
-    <div class="contato-wrapper">
+  <section id="areas" class="section section--areas" aria-labelledby="areas-titulo">
+    <div class="container">
+      <h2 id="areas-titulo" class="section-title reveal">Áreas de Atuação</h2>
 
-      <div class="contato-info reveal">
-        <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Fale Conosco</h2>
-        <p class="contato-description">
-          Estamos prontos para defender seus direitos. Descreva brevemente sua situação para um pré-atendimento
-          especializado.
-        </p>
+      <div class="areas__grid">
+        <div class="area-card reveal delay-1" (click)="abrirModalArea('civil')" (keydown.enter)="abrirModalArea('civil')" tabindex="0" role="button" aria-label="Ver detalhes de Direito Civil">
+          <div class="area-icon-wrapper">
+            <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+          </div>
+          <h4>Direito Civil</h4>
+          <p>Contratos, responsabilidade civil, danos materiais e morais com foco na prevenção e resolução de litígios.</p>
+          <span class="area-link">Saiba mais <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+        </div>
 
-        <div class="info-list">
-          <div class="info-item">
-            <mat-icon>location_on</mat-icon>
-            <div>
-              <h4>Atendimento Presencial</h4>
-              <p>Brasília - DF</p>
+        <div class="area-card reveal delay-2" (click)="abrirModalArea('familia')" (keydown.enter)="abrirModalArea('familia')" tabindex="0" role="button" aria-label="Ver detalhes de Direito de Família">
+          <div class="area-icon-wrapper">
+            <i class="fa-solid fa-users-rays" aria-hidden="true"></i>
+          </div>
+          <h4>Direito de Família</h4>
+          <p>Divórcio, guarda, pensão alimentícia, partilha de bens e planejamento com abordagem humanizada.</p>
+          <span class="area-link">Saiba mais <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+        </div>
+
+        <div class="area-card reveal delay-3" (click)="abrirModalArea('trabalho')" (keydown.enter)="abrirModalArea('trabalho')" tabindex="0" role="button" aria-label="Ver detalhes de Direito do Trabalho">
+          <div class="area-icon-wrapper">
+            <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+          </div>
+          <h4>Direito do Trabalho</h4>
+          <p>Reclamatórias, rescisões, acordos e negociações garantindo justiça nas relações de trabalho.</p>
+          <span class="area-link">Saiba mais <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+        </div>
+
+        <div class="area-card reveal delay-4" (click)="abrirModalArea('previdenciario')" (keydown.enter)="abrirModalArea('previdenciario')" tabindex="0" role="button" aria-label="Ver detalhes de Direito Previdenciário">
+          <div class="area-icon-wrapper">
+            <i class="fa-solid fa-person-cane" aria-hidden="true"></i>
+          </div>
+          <h4>Previdenciário</h4>
+          <p>Aposentadorias, pensões, auxílios e BPC/LOAS com análise estratégica de tempo e contribuição.</p>
+          <span class="area-link">Saiba mais <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre" class="section section--sobre" aria-labelledby="sobre-titulo">
+    <div class="container">
+      <div class="sobre-card reveal">
+
+        <div class="sobre-texto">
+          <span class="sobre-subtitle">Sobre a Fundadora</span>
+          <h2 id="sobre-titulo" class="sobre-title">Dra. Nikole Cristina</h2>
+
+          <p class="sobre-description">
+            Com uma trajetória pautada pela <strong>excelência técnica e pelo atendimento humanizado</strong>, dedico minha
+            carreira a defender os direitos de trabalhadores, segurados do INSS e famílias.
+            <br><br>
+            Nossa missão é oferecer uma advocacia estratégica e transparente, onde cada cliente é tratado com a
+            individualidade e o respeito que sua história merece.
+          </p>
+
+          <div class="sobre-highlights">
+            <div class="highlight-item">
+              <div class="icon-box"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></div>
+              <div>
+                <h4>Foco no Cliente</h4>
+                <p>Atendimento acolhedor, personalizado e focado em soluções concretas para cada caso.</p>
+              </div>
+            </div>
+            <div class="highlight-item">
+              <div class="icon-box"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
+              <div>
+                <h4>Ética e Segurança</h4>
+                <p>Transparência total e comunicação clara em todas as etapas do processo.</p>
+              </div>
             </div>
           </div>
 
-          <div class="info-item">
-            <mat-icon>public</mat-icon>
-            <div>
-              <h4>Atendimento Digital</h4>
-              <p>Todo o Brasil (Home Office)</p>
-            </div>
+          <div class="sobre-cta">
+            <a class="btn-cta" [href]="getWhatsAppLink()" target="_blank" rel="noopener noreferrer" aria-label="Agendar consulta com a Dra. Nikole Cristina">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> AGENDAR CONSULTA
+            </a>
           </div>
+        </div>
 
-          <div class="info-item">
-            <mat-icon>schedule</mat-icon>
-            <div>
-              <h4>Horário de Funcionamento</h4>
-              <p>Segunda a Sexta<br>08:00 às 12:00 e 13:00 às 18:00<br><em>(Horário de Brasília)</em></p>
+        <div class="sobre-visual">
+          <div class="layered-frame">
+            <div class="bg-shape" aria-hidden="true"></div>
+            <img src="assets/nikole-sobre.png" alt="Retrato profissional da Dra. Nikole Cristina" class="portrait-img" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" class="section section--contato" aria-labelledby="contato-titulo">
+    <div class="container">
+      <div class="contato-wrapper">
+
+        <div class="contato-info reveal">
+          <h2 id="contato-titulo" class="section-title" style="text-align: left; margin-bottom: 20px;">Fale Conosco</h2>
+          <p class="contato-description">
+            Estamos prontos para defender seus interesses. Descreva brevemente sua situação para um pré-atendimento
+            especializado e sem compromisso.
+          </p>
+
+          <div class="info-list">
+            <div class="info-item">
+              <mat-icon aria-hidden="true">location_on</mat-icon>
+              <div>
+                <h4>Atendimento Presencial</h4>
+                <p>Brasília - DF</p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <mat-icon aria-hidden="true">public</mat-icon>
+              <div>
+                <h4>Atendimento Digital</h4>
+                <p>Todo o Brasil (Consultoria Online segura)</p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <mat-icon aria-hidden="true">schedule</mat-icon>
+              <div>
+                <h4>Horário de Funcionamento</h4>
+                <p>Segunda a Sexta: 08:00 às 12:00 e 13:00 às 18:00<br><em>(Horário de Brasília)</em></p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="contato-card reveal delay-1">
-        <form class="contato-form" #contatoForm="ngForm" (ngSubmit)="enviarMensagem(contatoForm)">
-          <div class="form-group">
-            <label>Seu Nome Completo</label>
-            <input type="text" name="nome" ngModel required placeholder="Ex: João Silva">
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>E-mail</label>
-              <input type="email" name="email" ngModel required placeholder="seu@email.com">
+        <div class="contato-card reveal delay-1">
+          <form class="contato-form" #contatoForm="ngForm" (ngSubmit)="enviarMensagem(contatoForm)" novalidate>
+            
+            <div *ngIf="formErro" class="form-alerta form-alerta--erro" role="alert">
+              <mat-icon aria-hidden="true">error_outline</mat-icon>
+              <span>{{ formErro }}</span>
             </div>
-            <div class="form-group">
-              <label>WhatsApp / Telefone</label>
-              <input type="text" name="telefone" ngModel required placeholder="(00) 00000-0000" maxlength="15"
-                (input)="formatarTelefone($event)">
+
+            <div *ngIf="formEnviado" class="form-alerta form-alerta--sucesso" role="status">
+              <mat-icon aria-hidden="true">check_circle_outline</mat-icon>
+              <div>
+                <p><strong>Solicitação enviada com sucesso!</strong></p>
+                <p>Caso o WhatsApp não abra automaticamente, <a [href]="whatsappLinkTemporario" target="_blank" rel="noopener noreferrer">clique aqui para iniciar a conversa</a>.</p>
+              </div>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label>Descreva seu problema jurídico</label>
-            <textarea name="mensagem" ngModel required rows="4" placeholder="Como podemos te ajudar?"></textarea>
-          </div>
+            <div class="form-group">
+              <label for="campo-nome">Seu Nome Completo *</label>
+              <input id="campo-nome" type="text" name="nome" ngModel required #nome="ngModel" placeholder="Ex: João Silva" [class.input-erro]="nome.invalid && nome.touched">
+              <span class="erro-msg" *ngIf="nome.invalid && nome.touched">Por favor, informe seu nome completo.</span>
+            </div>
 
-          <button type="submit" class="btn-cta btn-submit">
-            <i class="fa-brands fa-whatsapp"></i> ENVIAR SOLICITAÇÃO
-          </button>
-        </form>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="campo-email">E-mail *</label>
+                <input id="campo-email" type="email" name="email" ngModel required email #email="ngModel" placeholder="seu@email.com" [class.input-erro]="email.invalid && email.touched">
+                <span class="erro-msg" *ngIf="email.invalid && email.touched">Informe um endereço de e-mail válido.</span>
+              </div>
+              <div class="form-group">
+                <label for="campo-telefone">WhatsApp / Telefone *</label>
+                <input id="campo-telefone" type="tel" name="telefone" ngModel required minlength="14" #telefone="ngModel" placeholder="(00) 00000-0000" maxlength="15" (input)="formatarTelefone($event)" [class.input-erro]="telefone.invalid && telefone.touched">
+                <span class="erro-msg" *ngIf="telefone.invalid && telefone.touched">Informe um número de telefone com DDD.</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="campo-mensagem">Descreva seu problema jurídico *</label>
+              <textarea id="campo-mensagem" name="mensagem" ngModel required minlength="10" #mensagem="ngModel" rows="4" placeholder="Como podemos te ajudar?" [class.input-erro]="mensagem.invalid && mensagem.touched"></textarea>
+              <span class="erro-msg" *ngIf="mensagem.invalid && mensagem.touched">Descreva resumidamente sua situação (ao menos 10 caracteres).</span>
+            </div>
+
+            <button type="submit" class="btn-cta btn-submit">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> ENVIAR SOLICITAÇÃO
+            </button>
+          </form>
+        </div>
+
       </div>
-
     </div>
-  </div>
-</section>
+  </section>
+</main>
 
-<footer class="footer">
+<footer class="footer" role="contentinfo">
   <div class="container footer__inner">
     <div class="brand">
-      <img class="brand__logo-img" src="assets/logo-preta.jpeg" alt="Logo" />
+      <img class="brand__logo-img" src="assets/logo-preta.jpeg" alt="Logotipo Nikole Cristina Advocacia" />
       <span class="brand__text">Nikole Cristina | Advocacia</span>
     </div>
-    <div class="footer-links">
-      <a href="https://instagram.com/advnikolecristina" target="_blank"><i class="fa-brands fa-instagram"></i>
-        INSTAGRAM</a>
-      <a href="https://www.linkedin.com/in/nikole-cristina-da-silva-rocha-a8564b2a0/" target="_blank"><i
-          class="fa-brands fa-linkedin"></i> LINKEDIN</a>
-      <a href="mailto:advnikolecristina@gmail.com"><i class="fa-solid fa-envelope"></i> E-MAIL</a>
+    <div class="footer-links" aria-label="Links para redes sociais">
+      <a href="https://instagram.com/advnikolecristina" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-instagram" aria-hidden="true"></i> INSTAGRAM
+      </a>
+      <a href="https://www.linkedin.com/in/nikole-cristina-da-silva-rocha-a8564b2a0/" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LINKEDIN
+      </a>
+      <a href="mailto:advnikolecristina@gmail.com" rel="noopener noreferrer">
+        <i class="fa-solid fa-envelope" aria-hidden="true"></i> E-MAIL
+      </a>
     </div>
   </div>
 
@@ -239,83 +258,93 @@
         <p>&copy; 2026 Nikole Cristina | Advocacia. Todos os direitos reservados. | OAB/DF 86.467</p>
       </div>
       <div class="legal-links">
-        <a href="#" (click)="abrirTermos($event)">Política de Privacidade e Termos de Uso</a>
+        <a (click)="abrirTermos($event)" (keydown.enter)="abrirTermos($event)" tabindex="0" role="button">Política de Privacidade e Termos de Uso</a>
       </div>
     </div>
   </div>
 </footer>
 
-<div class="cookie-banner" *ngIf="showCookieBanner">
+<!-- Banner de Cookies e Privacidade (LGPD) -->
+<aside class="cookie-banner" *ngIf="showCookieBanner" role="region" aria-label="Aviso de Privacidade">
   <div class="cookie-content">
     <div class="cookie-text">
-      <mat-icon>lock</mat-icon>
+      <mat-icon aria-hidden="true">lock</mat-icon>
       <div>
         <h4>Sua privacidade</h4>
-        <p>Ao acessar nosso site, você concorda com nossa <a href="#" (click)="abrirTermos($event)">Política de
-            Privacidade e Termos de Uso</a>.</p>
+        <p>
+          Utilizamos apenas tecnologias necessárias para o funcionamento seguro desta página, respeitando sua privacidade. Conheça nossa
+          <a (click)="abrirTermos($event)" (keydown.enter)="abrirTermos($event)" tabindex="0" role="button">Política de Privacidade e Termos de Uso</a>.
+        </p>
       </div>
     </div>
-    <button class="btn-cookie" (click)="aceitarCookies()">Continuar e fechar</button>
+    <button class="btn-cookie" (click)="aceitarCookies()" aria-label="Concordar e fechar banner de privacidade">Continuar e fechar</button>
   </div>
-</div>
+</aside>
 
-<div class="modal-overlay" *ngIf="showTermosModal" (click)="fecharTermos()">
+<!-- Modal de Termos de Uso e LGPD -->
+<div class="modal-overlay" *ngIf="showTermosModal" (click)="fecharTermos()" role="dialog" aria-modal="true" aria-labelledby="modal-termos-titulo">
   <div class="modal-content" (click)="$event.stopPropagation()">
-
-    <button class="btn-close-modal" (click)="fecharTermos()">
-      <mat-icon>close</mat-icon>
+    <button class="btn-close-modal" (click)="fecharTermos()" aria-label="Fechar modal de termos">
+      <mat-icon aria-hidden="true">close</mat-icon>
     </button>
 
     <div class="modal-body">
-      <h2>Política de Privacidade e Termos de Uso</h2>
+      <h2 id="modal-termos-titulo">Política de Privacidade e Termos de Uso</h2>
       <p class="data-update">Última atualização: Março de 2026</p>
 
       <h3>1. Finalidade Informativa</h3>
-      <p>Todo o conteúdo deste site tem caráter exclusivamente informativo e não substitui uma consulta formal. O
-        preenchimento do formulário não estabelece automaticamente uma relação de cliente e advogado.</p>
+      <p>Todo o conteúdo disponibilizado neste site possui caráter meramente informativo e de esclarecimento geral, em conformidade com as diretrizes da OAB. A navegação ou o envio de mensagens não estabelece automaticamente relação contratual de cliente e advogado.</p>
 
-      <h3>2. Coleta e Uso de Dados Pessoais (LGPD)</h3>
-      <p>Em conformidade com a Lei nº 13.709/2018, informamos que coletamos apenas os dados preenchidos voluntariamente
-        no formulário (Nome, E-mail, Telefone e Relato do Caso). Esses dados têm a finalidade <strong>exclusiva</strong>
-        de permitir que nossa equipe retorne o seu contato para atendimento jurídico.</p>
-      <p>Nós não vendemos, alugamos ou compartilhamos suas informações com terceiros.</p>
+      <h3>2. Tratamento de Dados Pessoais (LGPD)</h3>
+      <p>Em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), coletamos apenas as informações fornecidas voluntariamente pelo titular (Nome, E-mail, Telefone e Relato Sucinto). Tais dados são utilizados exclusivamente para retornar o contato com a devida orientação jurídica solicitada.</p>
+      <p>Não compartilhamos, cedemos ou comercializamos dados com terceiros sob qualquer hipótese.</p>
 
-      <h3>3. Cookies</h3>
-      <p>Utilizamos cookies técnicos essenciais apenas para garantir o funcionamento adequado da plataforma. Não
-        utilizamos cookies para rastreamento invasivo ou publicidade de terceiros.</p>
+      <h3>3. Armazenamento e Cookies</h3>
+      <p>Este site não utiliza cookies invasivos de rastreamento publicitário. Empregamos apenas armazenamento local técnico estritamente necessário para registrar suas preferências de navegação.</p>
 
-      <h3>4. Seus Direitos</h3>
-      <p>Você tem o direito de solicitar a exclusão ou bloqueio dos seus dados pessoais armazenados em nossa base. Para
-        isso, basta entrar em contato através do e-mail de contato oficial do escritório.</p>
+      <h3>4. Direitos do Titular de Dados</h3>
+      <p>Nos termos da LGPD, você pode a qualquer momento solicitar a retificação ou exclusão permanente dos seus dados de nossos canais de atendimento entrando em contato pelo e-mail oficial: <a href="mailto:advnikolecristina@gmail.com">advnikolecristina@gmail.com</a>.</p>
 
-      <h3>5. Direitos Autorais</h3>
-      <p>Todo o layout, textos, imagens e identidade visual deste site são protegidos por direitos autorais pertencentes
-        à Nikole Cristina Advocacia. É proibida a reprodução sem autorização prévia.</p>
+      <h3>5. Propriedade Intelectual</h3>
+      <p>Todos os textos, identidade visual, logotipo e conteúdos são de titularidade de Nikole Cristina Advocacia, sendo vedada sua reprodução sem autorização formal.</p>
     </div>
   </div>
 </div>
 
-<div class="modal-overlay" *ngIf="showAreaModal" (click)="fecharModalArea()">
+<!-- Modal Detalhado de Áreas de Atuação (Sem innerHTML - Seguro contra XSS) -->
+<div class="modal-overlay" *ngIf="showAreaModal" (click)="fecharModalArea()" role="dialog" aria-modal="true" aria-labelledby="modal-area-titulo">
   <div class="modal-content" (click)="$event.stopPropagation()">
-
-    <button class="btn-close-modal" (click)="fecharModalArea()">
-      <mat-icon>close</mat-icon>
+    <button class="btn-close-modal" (click)="fecharModalArea()" aria-label="Fechar modal de área de atuação">
+      <mat-icon aria-hidden="true">close</mat-icon>
     </button>
 
     <div class="modal-body" *ngIf="areaSelecionada">
-      <h2 style="margin-bottom: 5px;">{{ areaSelecionada.titulo }}</h2>
-      <p class="data-update" style="margin-bottom: 20px;">Área de atuação especializada</p>
+      <h2 id="modal-area-titulo">{{ areaSelecionada.titulo }}</h2>
+      <p class="data-update">{{ areaSelecionada.subtitulo }}</p>
 
-      <div [innerHTML]="areaSelecionada.texto"
-        style="text-align: left; line-height: 1.6; color: #4a4a4a; font-size: 15px;"></div>
+      <p class="modal-intro">{{ areaSelecionada.descricao }}</p>
 
-      <div style="text-align: center; margin-top: 30px;">
-        <button class="btn-cookie" style="width: auto; padding: 12px 30px; font-weight: bold;"
-          (click)="fecharModalArea()">
-          Voltar
+      <div class="modal-servicos">
+        <h4>Principais serviços e atuações:</h4>
+        <ul>
+          <li *ngFor="let servico of areaSelecionada.servicos">
+            <i class="fa-solid fa-check" aria-hidden="true"></i> {{ servico }}
+          </li>
+        </ul>
+      </div>
+
+      <p *ngIf="areaSelecionada.conclusao" class="modal-conclusao">
+        {{ areaSelecionada.conclusao }}
+      </p>
+
+      <div class="modal-acoes">
+        <a class="btn-cta" [href]="getWhatsAppLink()" target="_blank" rel="noopener noreferrer" aria-label="Consultar advogado especialista">
+          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> FALAR COM ESPECIALISTA
+        </a>
+        <button class="btn-voltar" (click)="fecharModalArea()" aria-label="Voltar para a página">
+          Fechar
         </button>
       </div>
     </div>
-
   </div>
 </div>

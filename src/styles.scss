@@ -1,25 +1,41 @@
 /* ==========================================================================
-   1. CONFIGURAÇÃO DO ANGULAR MATERIAL (@use OBRIGATÓRIO NO TOPO)
+   SISTEMA DE DESIGN & ESTILOS GLOBAIS - NIKOLE CRISTINA ADVOCACIA
    ========================================================================== */
 @use '@angular/material' as mat;
+@use "sass:color";
 
-/* ==========================================================================
-   2. IMPORTAÇÃO DE FONTES E ÍCONES
-   ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+/* Design Tokens & Paleta */
+:root {
+  --cor-primaria: #2d2926;
+  --cor-destaque: #8e7373;
+  --cor-destaque-hover: #7b6262;
+  --cor-fundo-site: #f8f7f6;
+  --cor-texto: #444444;
+  --cor-borda: #e8e4e1;
+  --fonte-titulo: 'Cormorant Garamond', Georgia, serif;
+  --fonte-texto: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
-/* ==========================================================================
-   3. TEMA E ESTILOS GLOBAIS MATERIAL
-   ========================================================================== */
+$cor-primaria: #2d2926;
+$cor-destaque: #8e7373;
+$cor-fundo-site: #f8f7f6;
+$cor-texto: #444444;
+$cor-borda: #e8e4e1;
+$fonte-titulo: 'Cormorant Garamond', serif;
+$fonte-texto: 'Montserrat', sans-serif;
+
+/* Configuração de Tema Angular Material */
 html {
-  @include mat.theme((color: (primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    ));
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
   height: 100%;
+  scroll-behavior: smooth;
 }
 
 * {
@@ -28,7 +44,136 @@ html {
 
 body {
   color-scheme: light;
-  background-color: var(--mat-sys-surface, #fafafa);
+  background-color: var(--cor-fundo-site);
+  color: var(--cor-texto);
+  font-family: var(--fonte-texto);
+  font-weight: 400;
   margin: 0;
-  height: 100%;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+p, a, span, button, li, input, textarea {
+  font-family: var(--fonte-texto);
+  color: var(--cor-texto);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--fonte-titulo);
+  color: var(--cor-primaria);
+  margin-top: 0;
+}
+
+/* Blindagem e Alinhamento de Ícones */
+.material-icons,
+.mat-icon {
+  font-family: 'Material Icons' !important;
+  vertical-align: middle;
+}
+
+.fa, .fab, .fas, .fa-brands, .fa-solid {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+  font-weight: 900;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Layout Utilitários Globais */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 100px 0;
+  overflow-x: hidden;
+}
+
+.section-title {
+  font-weight: 500;
+  color: var(--cor-primaria);
+  font-size: clamp(36px, 5vw, 48px);
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+/* Botões CTA Primários */
+.btn-cta {
+  background: var(--cor-destaque);
+  color: #ffffff !important;
+  padding: 18px 40px;
+  border-radius: 2px;
+  text-decoration: none;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+
+  i {
+    color: #ffffff !important;
+    font-size: 16px;
+  }
+
+  &:hover {
+    background: var(--cor-destaque-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Animações de Scroll (Intersection Observer) */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.2, 1, 0.2, 1), transform 0.8s cubic-bezier(0.2, 1, 0.2, 1);
+  will-change: opacity, transform;
+
+  &.delay-1 { transition-delay: 0.1s; }
+  &.delay-2 { transition-delay: 0.2s; }
+  &.delay-3 { transition-delay: 0.3s; }
+  &.delay-4 { transition-delay: 0.4s; }
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animações Globais Reutilizáveis */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 50px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpModal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

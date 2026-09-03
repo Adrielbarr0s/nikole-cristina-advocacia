@@ -1,169 +1,249 @@
-import { Component, AfterViewInit, ElementRef, HostListener, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  AfterViewInit,
+  ElementRef,
+  HostListener,
+  OnInit,
+  OnDestroy,
+  Renderer2,
+  Inject,
+  PLATFORM_ID
+} from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
+
+export interface AreaAtuacao {
+  titulo: string;
+  subtitulo: string;
+  descricao: string;
+  servicos: string[];
+  conclusao?: string;
+}
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, MatCardModule, FormsModule],
+  imports: [
+    CommonModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    FormsModule
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit {
-  mobileOpen: boolean = false;
-  isScrolled: boolean = false;
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+  mobileOpen = false;
+  isScrolled = false;
 
-  // Variável que controla o banner de cookies
-  showCookieBanner: boolean = true;
+  // Banner de consentimento / privacidade
+  showCookieBanner = true;
 
-  // ====== Variável: Controla o Pop-up de Termos ======
-  showTermosModal: boolean = false;
+  // Modais
+  showTermosModal = false;
+  showAreaModal = false;
+  areaSelecionada: AreaAtuacao | null = null;
 
-  // ====== NOVAS VARIÁVEIS: Controlam o Modal de Áreas de Atuação ======
-  showAreaModal: boolean = false;
-  areaSelecionada: any = null;
+  // Estado do formulário de contato
+  formEnviado = false;
+  formErro = '';
+  whatsappLinkTemporario = '';
 
-  // Textos completos de cada área (Você pode editar os textos à vontade aqui)
-  detalhesAreas: any = {
+  private observer?: IntersectionObserver;
+  private readonly whatsappNumero = '5561998056868';
+
+  // Conteúdo estruturado e tipado de cada área jurídica
+  detalhesAreas: Record<string, AreaAtuacao> = {
     civil: {
       titulo: 'Direito Civil',
-      texto: `
-        <p>O Direito Civil é a base das relações em sociedade. Nossa atuação nesta área visa proteger seu patrimônio, sua imagem e seus contratos.</p>
-        <p><strong>Principais serviços:</strong></p>
-        <ul>
-          <li>Elaboração e revisão de contratos.</li>
-          <li>Ações de indenização por danos morais e materiais.</li>
-          <li>Cobranças judiciais e extrajudiciais.</li>
-          <li>Resolução de conflitos de vizinhança e propriedade.</li>
-        </ul>
-        <p>Buscamos sempre a resolução mais rápida e vantajosa, priorizando acordos quando favoráveis ao cliente.</p>
-      `
+      subtitulo: 'Proteção patrimonial e resolução estratégica de conflitos',
+      descricao:
+        'O Direito Civil é a base das relações em sociedade. Nossa atuação visa proteger seu patrimônio, sua imagem e a segurança dos seus contratos.',
+      servicos: [
+        'Elaboração, análise e revisão criteriosa de contratos.',
+        'Ações de indenização por danos morais e materiais.',
+        'Cobranças judiciais e extrajudiciais eficazes.',
+        'Resolução de litígios de vizinhança, posse e propriedade.'
+      ],
+      conclusao:
+        'Buscamos sempre a resolução mais rápida e vantajosa, priorizando acordos favoráveis que evitam desgaste e custos processuais desnecessários.'
     },
     familia: {
       titulo: 'Direito de Família',
-      texto: `
-        <p>Sabemos que questões familiares exigem não apenas conhecimento técnico, mas também <strong>sensibilidade e discrição</strong>.</p>
-        <p><strong>Nossa atuação inclui:</strong></p>
-        <ul>
-          <li>Divórcio judicial e extrajudicial.</li>
-          <li>Pensão alimentícia (fixação, revisão e exoneração).</li>
-          <li>Guarda de menores e regulamentação de visitas.</li>
-          <li>Inventários e testamentos.</li>
-        </ul>
-      `
+      subtitulo: 'Sensibilidade, discrição e segurança jurídica',
+      descricao:
+        'Sabemos que questões familiares envolvem laços afetivos e exigem conhecimento técnico apurado aliado à sensibilidade e máxima discrição.',
+      servicos: [
+        'Divórcio consensual e litigioso (judicial e extrajudicial em cartório).',
+        'Pensão alimentícia: fixação, revisão, exoneração e execução de débitos.',
+        'Guarda de menores, tutela e regulamentação de convivência e visitas.',
+        'Inventários, partilha de bens, testamentos e planejamento sucessório.'
+      ],
+      conclusao:
+        'Priorizamos a proteção dos direitos dos envolvidos, o bem-estar dos filhos e a estabilidade emocional e financeira da família.'
     },
     trabalho: {
       titulo: 'Direito do Trabalho',
-      texto: `
-        <p>Atuamos na defesa intransigente dos direitos nas relações de emprego, garantindo que a justiça seja feita.</p>
-        <p><strong>Foco de atuação:</strong></p>
-        <ul>
-          <li>Reconhecimento de vínculo empregatício.</li>
-          <li>Cobrança de horas extras e verbas rescisórias não pagas.</li>
-          <li>Ações envolvendo assédio moral e doenças ocupacionais.</li>
-          <li>Reversão de demissão por justa causa.</li>
-        </ul>
-      `
+      subtitulo: 'Defesa incisiva dos direitos nas relações de emprego',
+      descricao:
+        'Atuamos de forma estratégica na defesa dos direitos trabalhistas, garantindo que a legislação seja rigorosamente cumprida.',
+      servicos: [
+        'Reconhecimento de vínculo empregatício sem registro em carteira.',
+        'Cobrança de horas extras, adicionais (insalubridade/periculosidade) e verbas rescisórias.',
+        'Ações indenizatórias por assédio moral e doenças ocupacionais.',
+        'Reversão de demissão arbitrária por justa causa.'
+      ],
+      conclusao:
+        'Atuação técnica e combativa com análise detalhada de documentos e provas para assegurar ao trabalhador o que lhe pertence por direito.'
     },
     previdenciario: {
       titulo: 'Direito Previdenciário',
-      texto: `
-        <p>Garantir o seu futuro e os seus benefícios é a nossa prioridade. Lidamos com a burocracia do INSS para você não precisar se preocupar.</p>
-        <p><strong>Serviços especializados:</strong></p>
-        <ul>
-          <li>Planejamento Previdenciário (saiba quando e com quanto vai se aposentar).</li>
-          <li>Aposentadorias (idade, tempo de contribuição, especial).</li>
-          <li>Auxílio-doença e aposentadoria por invalidez.</li>
-          <li>Benefício de Prestação Continuada (BPC/LOAS).</li>
-        </ul>
-      `
+      subtitulo: 'Planejamento e conquista de benefícios junto ao INSS',
+      descricao:
+        'Garantir seu futuro e a concessão correta dos seus benefícios é prioridade. Lidamos com toda a complexidade técnica e burocrática do INSS para você não se preocupar.',
+      servicos: [
+        'Planejamento Previdenciário completo (saiba a data ideal e como obter o melhor valor).',
+        'Aposentadorias por idade, tempo de contribuição e especial (atividades insalubres/periculosas).',
+        'Benefícios por incapacidade: auxílio por incapacidade temporária (auxílio-doença) e aposentadoria por invalidez.',
+        'Benefício de Prestação Continuada (BPC/LOAS) para idosos e pessoas com deficiência.'
+      ],
+      conclusao:
+        'Análise aprofundada de tempo de contribuição e contestação técnica ágil de negativas e cortes indevidos do INSS.'
     }
   };
 
-  constructor(private el: ElementRef) { }
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
-  // Verifica se o usuário já aceitou os cookies antes
   ngOnInit() {
-    const cookiesAccepted = localStorage.getItem('cookiesAccepted');
-    if (cookiesAccepted === 'true') {
-      this.showCookieBanner = false;
+    if (isPlatformBrowser(this.platformId)) {
+      try {
+        const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+        if (cookiesAccepted === 'true') {
+          this.showCookieBanner = false;
+        }
+      } catch {
+        // Fallback em caso de cookies desabilitados no navegador
+      }
     }
   }
 
-  // Esconde o banner e salva a preferência
-  aceitarCookies() {
-    this.showCookieBanner = false;
-    localStorage.setItem('cookiesAccepted', 'true');
+  ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+
+      const hiddenElements = this.el.nativeElement.querySelectorAll('.reveal');
+      hiddenElements.forEach((element: Element) => this.observer?.observe(element));
+    }
   }
 
-  // ====== Funções: Abrir e Fechar os Termos ======
-  abrirTermos(event: Event) {
-    event.preventDefault(); // Impede que o link jogue a tela para o topo
+  ngOnDestroy() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+    if (isPlatformBrowser(this.platformId)) {
+      this.renderer.setStyle(document.body, 'overflow', 'auto');
+    }
+  }
+
+  aceitarCookies() {
+    this.showCookieBanner = false;
+    if (isPlatformBrowser(this.platformId)) {
+      try {
+        localStorage.setItem('cookiesAccepted', 'true');
+      } catch {
+        // Silencioso se storage indisponível
+      }
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscapePressed() {
+    if (this.showTermosModal) {
+      this.fecharTermos();
+    }
+    if (this.showAreaModal) {
+      this.fecharModalArea();
+    }
+    if (this.mobileOpen) {
+      this.mobileOpen = false;
+    }
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.isScrolled = window.scrollY > 50;
+    }
+  }
+
+  abrirTermos(event?: Event) {
+    if (event) event.preventDefault();
     this.showTermosModal = true;
-    document.body.style.overflow = 'hidden'; // Trava a barra de rolagem do fundo
+    if (isPlatformBrowser(this.platformId)) {
+      this.renderer.setStyle(document.body, 'overflow', 'hidden');
+    }
   }
 
   fecharTermos() {
     this.showTermosModal = false;
-    document.body.style.overflow = 'auto'; // Libera a rolagem do site novamente
-  }
-
-  // ====== NOVAS FUNÇÕES: Abrir e Fechar o Modal de Áreas ======
-  abrirModalArea(areaKey: string) {
-    this.areaSelecionada = this.detalhesAreas[areaKey]; // Pega o texto correspondente
-    this.showAreaModal = true; // Mostra o modal
-    document.body.style.overflow = 'hidden'; // Trava o scroll do fundo
-  }
-
-  fecharModalArea() {
-    this.showAreaModal = false; // Esconde o modal
-    setTimeout(() => this.areaSelecionada = null, 300); // Limpa após a animação
-    document.body.style.overflow = 'auto'; // Destrava o scroll
-  }
-
-  // 1. Navbar Inteligente: Detecta o scroll para mudar o visual da barra
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    this.isScrolled = window.scrollY > 50;
-  }
-
-  ngAfterViewInit() {
-    // 2. Animações de Scroll (Intersection Observer)
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
-      });
-    }, {
-      threshold: 0.15
-    });
-
-    const hiddenElements = this.el.nativeElement.querySelectorAll('.reveal');
-    hiddenElements.forEach((el: any) => observer.observe(el));
-  }
-
-  // 3. Scroll Suave para links internos (Melhor UX)
-  scrollTo(sectionId: string, event: Event) {
-    event.preventDefault();
-    this.mobileOpen = false; // Fecha o menu mobile se estiver aberto
-
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
+    if (isPlatformBrowser(this.platformId)) {
+      this.renderer.setStyle(document.body, 'overflow', 'auto');
     }
   }
 
-  // 4. WhatsApp Inteligente com Saudação por Horário
+  abrirModalArea(areaKey: string) {
+    this.areaSelecionada = this.detalhesAreas[areaKey] ?? null;
+    this.showAreaModal = true;
+    if (isPlatformBrowser(this.platformId)) {
+      this.renderer.setStyle(document.body, 'overflow', 'hidden');
+    }
+  }
+
+  fecharModalArea() {
+    this.showAreaModal = false;
+    setTimeout(() => {
+      this.areaSelecionada = null;
+    }, 300);
+    if (isPlatformBrowser(this.platformId)) {
+      this.renderer.setStyle(document.body, 'overflow', 'auto');
+    }
+  }
+
+  scrollTo(sectionId: string, event: Event) {
+    event.preventDefault();
+    this.mobileOpen = false;
+
+    if (isPlatformBrowser(this.platformId)) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }
+  }
+
   getWhatsAppLink(): string {
-    const numero = '5561998056868';
     const horaAtual = new Date().getHours();
     let saudacao = 'Olá';
 
@@ -175,38 +255,44 @@ export class AppComponent implements OnInit, AfterViewInit {
       saudacao = 'Boa noite';
     }
 
-    const mensagem = `${saudacao}, Dra. Nikole Cristina! Estava no seu site e gostaria de tirar uma dúvida.`;
-    return `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+    const mensagem = `${saudacao}, Dra. Nikole Cristina! Estava no seu site e gostaria de agendar uma consulta jurídica.`;
+    return `https://wa.me/${this.whatsappNumero}?text=${encodeURIComponent(mensagem)}`;
   }
 
-  // 5. Envio do Formulário de Contato
-  enviarMensagem(form: any) {
-    if (form.valid) {
-      // Extrai os dados que o cliente digitou no site
-      const { nome, email, telefone, mensagem } = form.value;
-      const numero = '5561998056868'; // O número da Dra. Nikole
-
-      // Monta o texto bonitinho em negrito para chegar no WhatsApp dela
-      const texto = `Olá, Dra. Nikole!%0A%0A*Nova solicitação de contato via site:*%0A%0A*Nome:* ${nome}%0A*E-mail:* ${email}%0A*WhatsApp:* ${telefone}%0A*Problema:* ${mensagem}`;
-
-      // Abre o WhatsApp com a mensagem pronta
-      window.open(`https://wa.me/${numero}?text=${texto}`, '_blank');
-
-      // Limpa os campos do formulário após o envio para dar um aspecto profissional
-      form.reset();
-    } else {
-      // Se o cliente esquecer de preencher algo
-      alert('Por favor, preencha todos os campos para continuar.');
+  enviarMensagem(form: NgForm) {
+    if (!form.valid) {
+      this.formErro = 'Por favor, preencha todos os campos obrigatórios corretamente.';
+      return;
     }
+
+    this.formErro = '';
+    const { nome, email, telefone, mensagem } = form.value;
+
+    const textoFormatado =
+      `Olá, Dra. Nikole!\n\n` +
+      `*Nova solicitação de contato via site:*\n\n` +
+      `*Nome:* ${nome?.trim()}\n` +
+      `*E-mail:* ${email?.trim()}\n` +
+      `*WhatsApp:* ${telefone?.trim()}\n` +
+      `*Problema:* ${mensagem?.trim()}`;
+
+    const url = `https://wa.me/${this.whatsappNumero}?text=${encodeURIComponent(textoFormatado)}`;
+    this.whatsappLinkTemporario = url;
+    this.formEnviado = true;
+
+    if (isPlatformBrowser(this.platformId)) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
+    form.resetForm();
   }
 
-  // Máscara de Telefone
-  formatarTelefone(event: any) {
-    let valor = event.target.value.replace(/\D/g, ''); // Remove tudo que não é número
+  formatarTelefone(event: Event) {
+    const input = event.target as HTMLInputElement;
+    let valor = input.value.replace(/\D/g, '');
 
-    if (valor.length > 11) valor = valor.substring(0, 11); // Limita a 11 dígitos
+    if (valor.length > 11) valor = valor.substring(0, 11);
 
-    // Aplica a máscara (00) 00000-0000
     if (valor.length > 10) {
       valor = valor.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
     } else if (valor.length > 5) {
@@ -217,6 +303,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       valor = valor.replace(/^(\d*)/, '($1');
     }
 
-    event.target.value = valor;
+    input.value = valor;
   }
 }
