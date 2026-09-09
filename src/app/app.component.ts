@@ -147,7 +147,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           });
         },
-        { threshold: 0.15 }
+        { threshold: 0.05 }
       );
 
       const hiddenElements = this.el.nativeElement.querySelectorAll('.reveal');
@@ -160,7 +160,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       this.observer.disconnect();
     }
     if (isPlatformBrowser(this.platformId)) {
-      this.renderer.setStyle(document.body, 'overflow', 'auto');
+      this.renderer.removeStyle(document.body, 'overflow');
     }
   }
 
@@ -175,24 +175,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  toggleMobileMenu() {
-    this.mobileOpen = !this.mobileOpen;
-    if (isPlatformBrowser(this.platformId)) {
-      if (this.mobileOpen) {
-        this.renderer.setStyle(document.body, 'overflow', 'hidden');
-      } else if (!this.showTermosModal && !this.showAreaModal) {
-        this.renderer.setStyle(document.body, 'overflow', 'auto');
-      }
-    }
-  }
-
-  fecharMobileMenu() {
-    this.mobileOpen = false;
-    if (isPlatformBrowser(this.platformId) && !this.showTermosModal && !this.showAreaModal) {
-      this.renderer.setStyle(document.body, 'overflow', 'auto');
-    }
-  }
-
   @HostListener('document:keydown.escape')
   onEscapePressed() {
     if (this.showTermosModal) {
@@ -202,7 +184,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       this.fecharModalArea();
     }
     if (this.mobileOpen) {
-      this.fecharMobileMenu();
+      this.mobileOpen = false;
     }
   }
 
@@ -224,7 +206,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   fecharTermos() {
     this.showTermosModal = false;
     if (isPlatformBrowser(this.platformId)) {
-      this.renderer.setStyle(document.body, 'overflow', 'auto');
+      this.renderer.removeStyle(document.body, 'overflow');
     }
   }
 
@@ -242,13 +224,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       this.areaSelecionada = null;
     }, 300);
     if (isPlatformBrowser(this.platformId)) {
-      this.renderer.setStyle(document.body, 'overflow', 'auto');
+      this.renderer.removeStyle(document.body, 'overflow');
     }
   }
 
   scrollTo(sectionId: string, event: Event) {
     event.preventDefault();
-    this.fecharMobileMenu();
+    this.mobileOpen = false;
 
     if (isPlatformBrowser(this.platformId)) {
       const element = document.getElementById(sectionId);
