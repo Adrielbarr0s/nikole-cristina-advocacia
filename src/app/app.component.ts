@@ -175,6 +175,24 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  toggleMobileMenu() {
+    this.mobileOpen = !this.mobileOpen;
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.mobileOpen) {
+        this.renderer.setStyle(document.body, 'overflow', 'hidden');
+      } else if (!this.showTermosModal && !this.showAreaModal) {
+        this.renderer.setStyle(document.body, 'overflow', 'auto');
+      }
+    }
+  }
+
+  fecharMobileMenu() {
+    this.mobileOpen = false;
+    if (isPlatformBrowser(this.platformId) && !this.showTermosModal && !this.showAreaModal) {
+      this.renderer.setStyle(document.body, 'overflow', 'auto');
+    }
+  }
+
   @HostListener('document:keydown.escape')
   onEscapePressed() {
     if (this.showTermosModal) {
@@ -184,7 +202,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       this.fecharModalArea();
     }
     if (this.mobileOpen) {
-      this.mobileOpen = false;
+      this.fecharMobileMenu();
     }
   }
 
@@ -230,7 +248,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   scrollTo(sectionId: string, event: Event) {
     event.preventDefault();
-    this.mobileOpen = false;
+    this.fecharMobileMenu();
 
     if (isPlatformBrowser(this.platformId)) {
       const element = document.getElementById(sectionId);

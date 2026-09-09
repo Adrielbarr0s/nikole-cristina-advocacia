@@ -35,6 +35,8 @@ html {
     density: 0,
   ));
   height: 100%;
+  width: 100%;
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
@@ -49,7 +51,10 @@ body {
   font-family: var(--fonte-texto);
   font-weight: 400;
   margin: 0;
+  width: 100%;
   min-height: 100%;
+  overflow-x: hidden;
+  position: relative;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -87,26 +92,31 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+
+  @media (max-width: 480px) {
+    padding: 0 16px;
+  }
 }
 
 .section {
-  padding: 100px 0;
+  padding: clamp(48px, 7vw, 100px) 0;
   overflow-x: hidden;
 }
 
 .section-title {
   font-weight: 500;
   color: var(--cor-primaria);
-  font-size: clamp(36px, 5vw, 48px);
+  font-size: clamp(26px, 5vw, 44px);
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: clamp(30px, 4.5vw, 60px);
+  word-wrap: break-word;
 }
 
 /* Botões CTA Primários */
 .btn-cta {
   background: var(--cor-destaque);
   color: #ffffff !important;
-  padding: 18px 40px;
+  padding: 16px 36px;
   border-radius: 2px;
   text-decoration: none;
   font-size: 12px;
@@ -114,21 +124,39 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 2px;
   display: inline-flex;
   align-items: center;
-  gap: 15px;
+  justify-content: center;
+  gap: 12px;
   transition: all 0.3s ease;
   font-weight: 600;
   border: none;
   cursor: pointer;
+  max-width: 100%;
+  box-sizing: border-box;
 
   i {
     color: #ffffff !important;
     font-size: 16px;
+    flex-shrink: 0;
   }
 
   &:hover {
     background: var(--cor-destaque-hover);
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 600px) {
+    padding: 14px 20px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    gap: 10px;
+  }
+}
+
+/* Neutraliza o auto-zoom do Safari iOS em campos de formulário */
+@media (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
   }
 }
 

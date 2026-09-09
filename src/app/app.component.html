@@ -12,13 +12,15 @@
       <a (click)="scrollTo('contato', $event)" (keydown.enter)="scrollTo('contato', $event)" tabindex="0" role="button" class="btn-nav">Fale Conosco</a>
     </nav>
 
-    <button mat-icon-button class="hamburger" (click)="mobileOpen = !mobileOpen" aria-label="Abrir menu mobile">
+    <button mat-icon-button class="hamburger" (click)="toggleMobileMenu()" aria-label="Abrir menu mobile">
       <mat-icon>{{ mobileOpen ? 'close' : 'menu' }}</mat-icon>
     </button>
   </div>
 </mat-toolbar>
 
-<nav class="mobile-menu" [hidden]="!mobileOpen" aria-label="Menu de navegação mobile">
+<div class="mobile-backdrop" *ngIf="mobileOpen" (click)="fecharMobileMenu()" aria-hidden="true"></div>
+
+<nav class="mobile-menu" [class.is-open]="mobileOpen" [hidden]="!mobileOpen" aria-label="Menu de navegação mobile">
   <a (click)="scrollTo('inicio', $event)" (keydown.enter)="scrollTo('inicio', $event)" tabindex="0" role="button">Início</a>
   <a (click)="scrollTo('areas', $event)" (keydown.enter)="scrollTo('areas', $event)" tabindex="0" role="button">Áreas de Atuação</a>
   <a (click)="scrollTo('sobre', $event)" (keydown.enter)="scrollTo('sobre', $event)" tabindex="0" role="button">Sobre</a>
